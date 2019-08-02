@@ -1,6 +1,7 @@
 import React from "react";
 import { useIsLoggedIn } from "../../AuthContext";
 import { View, Text } from "react-native";
+import AuthNavigation from "../Navigation/AuthNavigation";
 
 export default () => {
   const isLoggedIn = useIsLoggedIn();
@@ -9,8 +10,6 @@ export default () => {
       <Text>LoggedIn</Text>
     </View>
   ) : (
-    <View>
-      <Text>LoggedOut</Text>
-    </View>
+    <AuthNavigation />
   );
 };

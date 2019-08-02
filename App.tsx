@@ -9,12 +9,12 @@ import { ApolloLink, Operation, split, concat } from "apollo-link";
 import { InMemoryCache } from "apollo-cache-inmemory";
 import { WebSocketLink } from "apollo-link-ws";
 import { persistCache } from "apollo-cache-persist";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, AntDesign } from "@expo/vector-icons";
 import { AsyncStorage } from "react-native";
 import { getMainDefinition } from "apollo-utilities";
 import { ApolloProvider } from "react-apollo-hooks";
 import { AuthProvider } from "./AuthContext";
-import NavigationController from "./src/Components/NavigationController";
+import NavigationController from "./src/NavigationRouter/NavigationController";
 
 export default function App() {
   const [loaded, setLoaded] = useState<boolean>(false);
@@ -22,7 +22,8 @@ export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState<any>(null);
   const preLoad = async () => {
     await Font.loadAsync({
-      ...Ionicons.font
+      ...Ionicons.font,
+      ...AntDesign.font
     });
     await Asset.loadAsync([require("./assets/noPhoto.jpg")]);
     const cache = new InMemoryCache();
