@@ -10,9 +10,11 @@ import { InMemoryCache } from "apollo-cache-inmemory";
 import { WebSocketLink } from "apollo-link-ws";
 import { persistCache } from "apollo-cache-persist";
 import { Ionicons } from "@expo/vector-icons";
-import { Text, View, AsyncStorage } from "react-native";
+import { AsyncStorage } from "react-native";
 import { getMainDefinition } from "apollo-utilities";
 import { ApolloProvider } from "react-apollo-hooks";
+import { AuthProvider } from "./AuthContext";
+import NavigationController from "./src/Components/NavigationController";
 
 export default function App() {
   const [loaded, setLoaded] = useState<boolean>(false);
@@ -87,11 +89,9 @@ export default function App() {
   if (loaded && clientReady && isLoggedIn !== null) {
     return (
       <ApolloProvider client={clientReady}>
-        <View
-          style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
-        >
-          <Text>GOGO</Text>
-        </View>
+        <AuthProvider isLoggedIn={isLoggedIn}>
+          <NavigationController />
+        </AuthProvider>
       </ApolloProvider>
     );
   } else {
