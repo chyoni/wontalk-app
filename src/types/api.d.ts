@@ -48,6 +48,29 @@ export interface confirmSecretVariables {
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
+// ====================================================
+// GraphQL mutation operation: createUser
+// ====================================================
+
+export interface createUser_createUser {
+  __typename: "CreateUserResponse";
+  ok: boolean;
+  error: string | null;
+}
+
+export interface createUser {
+  createUser: createUser_createUser;
+}
+
+export interface createUserVariables {
+  email: string;
+  username: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
 //==============================================================
 // START Enums and Input Objects
 //==============================================================

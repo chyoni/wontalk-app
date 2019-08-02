@@ -9,7 +9,12 @@ import { ApolloLink, Operation, split, concat } from "apollo-link";
 import { InMemoryCache } from "apollo-cache-inmemory";
 import { WebSocketLink } from "apollo-link-ws";
 import { persistCache } from "apollo-cache-persist";
-import { Ionicons, AntDesign } from "@expo/vector-icons";
+import {
+  Ionicons,
+  AntDesign,
+  Feather,
+  MaterialCommunityIcons
+} from "@expo/vector-icons";
 import { AsyncStorage } from "react-native";
 import { getMainDefinition } from "apollo-utilities";
 import { ApolloProvider } from "react-apollo-hooks";
@@ -23,7 +28,9 @@ export default function App() {
   const preLoad = async () => {
     await Font.loadAsync({
       ...Ionicons.font,
-      ...AntDesign.font
+      ...AntDesign.font,
+      ...Feather.font,
+      ...MaterialCommunityIcons.font
     });
     await Asset.loadAsync([require("./assets/noPhoto.jpg")]);
     const cache = new InMemoryCache();

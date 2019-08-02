@@ -5,5 +5,8 @@ export default {
   whiteColor: "#FFFFFF",
   boxBorder: "1px solid #e6e6e6",
   borderColor: "#e6e6e6",
-  greenColor: "#51C675"
+  greenColor: "#51C675",
+  purpleColor: "#6B52AE",
+  blueColor: "#74b9ff",
+  redColor: "#e86363"
 };
