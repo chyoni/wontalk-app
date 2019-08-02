@@ -4,7 +4,7 @@ import styled from "styled-components/native";
 import Theme from "../../Theme";
 
 const Container = styled<any>(View)`
-  border-radius: 8px;
+  border-radius: 10px;
   background-color: ${props => props.color};
   width: ${props => props.width};
   padding: 10px;
@@ -19,7 +19,7 @@ const Text = styled.Text`
 interface IProps {
   text: string;
   color: string;
-  width: string;
+  width: number | string;
   loading?: boolean;
   className?: any;
 }
