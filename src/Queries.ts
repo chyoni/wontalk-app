@@ -27,3 +27,47 @@ export const CREATE_USER = gql`
     }
   }
 `;
+
+export const SEE_ME = gql`
+  query seeMe {
+    seeMe {
+      id
+      username
+      email
+      avatar
+      firstName
+      lastName
+      bio
+      room {
+        id
+        entrant {
+          id
+          username
+          avatar
+        }
+        messages {
+          id
+          text
+        }
+      }
+      message {
+        id
+        text
+        room {
+          id
+        }
+      }
+      friends {
+        id
+        username
+        email
+        avatar
+        bio
+        createdDate
+        createdTime
+      }
+      createdDate
+      createdTime
+    }
+  }
+`;

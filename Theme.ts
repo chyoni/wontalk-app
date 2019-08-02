@@ -8,5 +8,6 @@ export default {
   greenColor: "#51C675",
   purpleColor: "#6B52AE",
   blueColor: "#74b9ff",
-  redColor: "#e86363"
+  redColor: "#e86363",
+  darkGreyColor: "#999"
 };

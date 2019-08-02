@@ -8,13 +8,7 @@ import Chats from "../Screen/Tab/Chats";
 import Search from "../Screen/Tab/Search";
 import Setting from "../Screen/Tab/Setting";
 import { Text } from "react-native";
-import {
-  Feather,
-  AntDesign,
-  MaterialCommunityIcons,
-  Ionicons,
-  MaterialIcons
-} from "@expo/vector-icons";
+import { MaterialCommunityIcons, Ionicons } from "@expo/vector-icons";
 import Theme from "../../Theme";
 
 const tabToStack = (initialRoute: React.FunctionComponent, navConfig?) =>
