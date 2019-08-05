@@ -1423,7 +1423,7 @@
             "description": "",
             "args": [
               {
-                "name": "userId",
+                "name": "roomId",
                 "description": "",
                 "type": {
                   "kind": "NON_NULL",

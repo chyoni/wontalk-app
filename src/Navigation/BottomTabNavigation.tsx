@@ -4,7 +4,7 @@ import {
   createStackNavigator
 } from "react-navigation";
 import Friends from "../Screen/Tab/Friends";
-import Chats from "../Screen/Tab/Chats";
+import Rooms from "../Screen/Tab/Rooms";
 import Search from "../Screen/Tab/Search";
 import Setting from "../Screen/Tab/Setting";
 import { Text } from "react-native";
@@ -26,7 +26,9 @@ const tabToStack = (initialRoute: React.FunctionComponent, navConfig?) =>
         headerStyle: {
           height: 70,
           borderBottomColor: "#FFFFFF"
-        }
+        },
+        headerBackTitle: null,
+        headerTintColor: Theme.blackColor
       }
     }
   );
@@ -48,8 +50,8 @@ export default createBottomTabNavigator(
         )
       }
     },
-    Chats: {
-      screen: tabToStack(Chats, {
+    Rooms: {
+      screen: tabToStack(Rooms, {
         headerLeft: () => (
           <Text style={{ fontSize: 23, paddingLeft: 20 }}>채팅</Text>
         )

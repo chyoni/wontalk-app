@@ -86,6 +86,8 @@ export interface seeMe_seeMe_room_messages {
   __typename: "Message";
   id: string;
   text: string;
+  createdDate: string | null;
+  createdTime: string | null;
 }
 
 export interface seeMe_seeMe_room {
@@ -93,6 +95,8 @@ export interface seeMe_seeMe_room {
   id: string;
   entrant: seeMe_seeMe_room_entrant[];
   messages: seeMe_seeMe_room_messages[];
+  createdDate: string | null;
+  createdTime: string | null;
 }
 
 export interface seeMe_seeMe_message_room {
@@ -136,6 +140,142 @@ export interface seeMe_seeMe {
 
 export interface seeMe {
   seeMe: seeMe_seeMe;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: createRoom
+// ====================================================
+
+export interface createRoom_createRoom_room {
+  __typename: "Room";
+  id: string;
+}
+
+export interface createRoom_createRoom {
+  __typename: "CreateRoomResponse";
+  ok: boolean;
+  error: string | null;
+  room: createRoom_createRoom_room | null;
+}
+
+export interface createRoom {
+  createRoom: createRoom_createRoom;
+}
+
+export interface createRoomVariables {
+  you: string[];
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL query operation: seeRoom
+// ====================================================
+
+export interface seeRoom_seeRoom_room_entrant {
+  __typename: "User";
+  id: string;
+  username: string;
+  avatar: string | null;
+}
+
+export interface seeRoom_seeRoom_room_messages_user {
+  __typename: "User";
+  id: string;
+  username: string;
+  avatar: string | null;
+}
+
+export interface seeRoom_seeRoom_room_messages {
+  __typename: "Message";
+  id: string;
+  text: string;
+  user: seeRoom_seeRoom_room_messages_user;
+  createdDate: string | null;
+  createdTime: string | null;
+}
+
+export interface seeRoom_seeRoom_room {
+  __typename: "Room";
+  id: string;
+  entrant: seeRoom_seeRoom_room_entrant[];
+  messages: seeRoom_seeRoom_room_messages[];
+}
+
+export interface seeRoom_seeRoom {
+  __typename: "SeeRoomResponse";
+  ok: boolean;
+  error: string | null;
+  room: seeRoom_seeRoom_room | null;
+}
+
+export interface seeRoom {
+  seeRoom: seeRoom_seeRoom;
+}
+
+export interface seeRoomVariables {
+  roomId: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: sendMessage
+// ====================================================
+
+export interface sendMessage_sendMessage {
+  __typename: "SendMessageResponse";
+  ok: boolean;
+  error: string | null;
+}
+
+export interface sendMessage {
+  sendMessage: sendMessage_sendMessage;
+}
+
+export interface sendMessageVariables {
+  roomId: string;
+  text: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL subscription operation: newMessage
+// ====================================================
+
+export interface newMessage_newMessage_user {
+  __typename: "User";
+  id: string;
+  avatar: string | null;
+  username: string;
+}
+
+export interface newMessage_newMessage {
+  __typename: "Message";
+  id: string;
+  text: string;
+  user: newMessage_newMessage_user;
+  createdDate: string | null;
+  createdTime: string | null;
+}
+
+export interface newMessage {
+  newMessage: newMessage_newMessage | null;
+}
+
+export interface newMessageVariables {
+  roomId: string;
 }
 
 /* tslint:disable */

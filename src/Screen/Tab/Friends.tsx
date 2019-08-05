@@ -4,20 +4,18 @@ import {
   NavigationState,
   NavigationParams
 } from "react-navigation";
-import { ScrollView, Modal, ImageBackground } from "react-native";
-import { useQuery } from "react-apollo-hooks";
-import { SEE_ME } from "../../Queries";
+import { ScrollView, Modal, ImageBackground, Alert } from "react-native";
+import { useQuery, useMutation } from "react-apollo-hooks";
+import { SEE_ME, CREATE_ROOM } from "../../Queries";
 import Loader from "../../Components/Loader";
 import styled from "styled-components/native";
-import { seeMe } from "../../types/api";
+import { seeMe, createRoom, createRoomVariables } from "../../types/api";
 import Theme from "../../../Theme";
 import Avatar from "../../Components/Avatar";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import constants from "../../../constants";
 import {
-  AntDesign,
   Ionicons,
-  MaterialIcons,
   EvilIcons,
   MaterialCommunityIcons
 } from "@expo/vector-icons";
@@ -120,16 +118,16 @@ interface IProps {
 }
 
 const Friends: React.SFC<IProps> = ({ navigation }) => {
-  const [seeYourModal, setseeYourModal] = useState<boolean>(false);
+  const [seeYourModal, setSeeYourModal] = useState<boolean>(false);
   const [seeMyModal, setSeeMyModal] = useState<boolean>(false);
   const { data, loading } = useQuery<seeMe, null>(SEE_ME);
+  const createRoom = useMutation<createRoom, createRoomVariables>(CREATE_ROOM);
   const toggleYourModal = () => {
-    setseeYourModal(!seeYourModal);
+    setSeeYourModal(!seeYourModal);
   };
   const toggleMyModal = () => {
     setSeeMyModal(!seeMyModal);
   };
-  console.log(data, loading);
   if (loading) {
     return <Loader />;
   } else if (!loading && data && data.seeMe) {
@@ -182,7 +180,7 @@ const Friends: React.SFC<IProps> = ({ navigation }) => {
                     )}
                   </ModalBody>
                   <ModalFooter>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => Alert.alert("soon")}>
                       <MaterialCommunityIcons
                         name={"pencil"}
                         size={40}
@@ -246,7 +244,36 @@ const Friends: React.SFC<IProps> = ({ navigation }) => {
                       )}
                     </ModalBody>
                     <ModalFooter>
-                      <TouchableOpacity>
+                      <TouchableOpacity
+                        onPress={async () => {
+                          const [
+                            createRoomFn,
+                            { loading: mutationLoading }
+                          ] = createRoom;
+                          try {
+                            const { data } = await createRoomFn({
+                              variables: {
+                                you: [fr.id]
+                              }
+                            });
+                            if (!mutationLoading && data && data.createRoom) {
+                              if (data.createRoom.ok) {
+                                await setSeeYourModal(false);
+                                navigation.navigate("ChatRoom", {
+                                  roomId: data.createRoom.room!.id,
+                                  to: fr.username
+                                });
+                              } else {
+                                Alert.alert(data.createRoom.error!);
+                              }
+                            } else {
+                              Alert.alert("알수없는 오류입니다 😰");
+                            }
+                          } catch (e) {
+                            Alert.alert(e.message);
+                          }
+                        }}
+                      >
                         <Ionicons
                           name={"ios-chatbubbles"}
                           size={40}

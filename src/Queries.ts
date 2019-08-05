@@ -48,7 +48,11 @@ export const SEE_ME = gql`
         messages {
           id
           text
+          createdDate
+          createdTime
         }
+        createdDate
+        createdTime
       }
       message {
         id
@@ -65,6 +69,71 @@ export const SEE_ME = gql`
         bio
         createdDate
         createdTime
+      }
+      createdDate
+      createdTime
+    }
+  }
+`;
+
+export const CREATE_ROOM = gql`
+  mutation createRoom($you: [String!]!) {
+    createRoom(you: $you) {
+      ok
+      error
+      room {
+        id
+      }
+    }
+  }
+`;
+
+export const SEE_ROOM = gql`
+  query seeRoom($roomId: String!) {
+    seeRoom(roomId: $roomId) {
+      ok
+      error
+      room {
+        id
+        entrant {
+          id
+          username
+          avatar
+        }
+        messages {
+          id
+          text
+          user {
+            id
+            username
+            avatar
+          }
+          createdDate
+          createdTime
+        }
+      }
+    }
+  }
+`;
+
+export const SEND_MESSAGE = gql`
+  mutation sendMessage($roomId: String!, $text: String!) {
+    sendMessage(roomId: $roomId, text: $text) {
+      ok
+      error
+    }
+  }
+`;
+
+export const NEW_MESSAGE = gql`
+  subscription newMessage($roomId: String!) {
+    newMessage(roomId: $roomId) {
+      id
+      text
+      user {
+        id
+        avatar
+        username
       }
       createdDate
       createdTime

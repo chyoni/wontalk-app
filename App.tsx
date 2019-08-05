@@ -59,7 +59,7 @@ export default function App() {
       options: {
         reconnect: true
       },
-      uri: "ws://192.168.219.103:4000/graphql"
+      uri: `ws://192.168.219.103:4000`
     });
     const combinedLinks = split(
       ({ query }) => {
