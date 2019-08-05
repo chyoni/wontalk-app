@@ -282,6 +282,63 @@ export interface newMessageVariables {
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
+// ====================================================
+// GraphQL query operation: searchUser
+// ====================================================
+
+export interface searchUser_searchUser_user {
+  __typename: "User";
+  id: string;
+  username: string;
+  avatar: string | null;
+  bio: string | null;
+  email: string;
+  isFriends: boolean;
+  createdDate: string | null;
+  createdTime: string | null;
+}
+
+export interface searchUser_searchUser {
+  __typename: "SearchUserResponse";
+  ok: boolean;
+  error: string | null;
+  user: (searchUser_searchUser_user | null)[] | null;
+}
+
+export interface searchUser {
+  searchUser: searchUser_searchUser;
+}
+
+export interface searchUserVariables {
+  term: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
+// ====================================================
+// GraphQL mutation operation: addFriend
+// ====================================================
+
+export interface addFriend_addFriend {
+  __typename: "AddFriendResponse";
+  ok: boolean;
+  error: string | null;
+}
+
+export interface addFriend {
+  addFriend: addFriend_addFriend;
+}
+
+export interface addFriendVariables {
+  friendId: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
 //==============================================================
 // START Enums and Input Objects
 //==============================================================

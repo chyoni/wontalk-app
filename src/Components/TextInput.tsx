@@ -16,6 +16,7 @@ interface IProps {
   onChangeText: (text: any) => void;
   className?: any;
   returnKeyType?: "done" | "go" | "next" | "search" | "send";
+  onSubmitEditing?: any;
 }
 const TextInput: React.SFC<IProps> = ({
   width,
@@ -23,7 +24,8 @@ const TextInput: React.SFC<IProps> = ({
   value,
   onChangeText,
   className,
-  returnKeyType
+  returnKeyType,
+  onSubmitEditing
 }) => {
   return (
     <ExTextInput
@@ -33,6 +35,7 @@ const TextInput: React.SFC<IProps> = ({
       onChangeText={onChangeText}
       width={width}
       returnKeyType={returnKeyType}
+      onSubmitEditing={onSubmitEditing}
     />
   );
 };

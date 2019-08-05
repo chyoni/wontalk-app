@@ -140,3 +140,31 @@ export const NEW_MESSAGE = gql`
     }
   }
 `;
+
+export const SEARCH = gql`
+  query searchUser($term: String!) {
+    searchUser(term: $term) {
+      ok
+      error
+      user {
+        id
+        username
+        avatar
+        bio
+        email
+        isFriends
+        createdDate
+        createdTime
+      }
+    }
+  }
+`;
+
+export const ADD_FRIEND = gql`
+  mutation addFriend($friendId: String!) {
+    addFriend(friendId: $friendId) {
+      ok
+      error
+    }
+  }
+`;
