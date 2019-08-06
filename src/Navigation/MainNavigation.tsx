@@ -1,4 +1,4 @@
-import { createAppContainer, createStackNavigator } from "react-navigation";
+import { createStackNavigator } from "react-navigation";
 import BottomTabNavigation from "./BottomTabNavigation";
 import ChatNavigation from "./ChatNavigation";
 
@@ -12,4 +12,4 @@ const MainNavigation = createStackNavigator(
   }
 );
 
-export default createAppContainer(MainNavigation);
+export default MainNavigation;

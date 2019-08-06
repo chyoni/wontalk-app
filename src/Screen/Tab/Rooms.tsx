@@ -51,7 +51,6 @@ interface IProps {
 
 const Rooms: React.SFC<IProps> = ({ navigation }) => {
   const { data, loading } = useQuery<seeMe, null>(SEE_ME);
-  console.log(data, loading);
   if (loading) {
     return <Loader />;
   } else if (!loading && data && data.seeMe) {

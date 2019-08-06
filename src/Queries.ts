@@ -168,3 +168,23 @@ export const ADD_FRIEND = gql`
     }
   }
 `;
+
+export const SEE_USER = gql`
+  query seeUser($username: String!) {
+    seeUser(username: $username) {
+      ok
+      error
+      user {
+        id
+        isSelf
+        username
+        email
+        avatar
+        bio
+        isFriends
+        createdDate
+        createdTime
+      }
+    }
+  }
+`;

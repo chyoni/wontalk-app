@@ -32,6 +32,7 @@ const tabToStack = (initialRoute: React.FunctionComponent, navConfig?) =>
       }
     }
   );
+
 export default createBottomTabNavigator(
   {
     Friends: {

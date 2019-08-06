@@ -1,9 +1,9 @@
 import React from "react";
 import { useIsLoggedIn } from "../../AuthContext";
 import AuthNavigation from "../Navigation/AuthNavigation";
-import MainNavigation from "../Navigation/MainNavigation";
+import RootNavigation from "../Navigation/RootNavigation";
 
 export default () => {
   const isLoggedIn = useIsLoggedIn();
-  return isLoggedIn ? <MainNavigation /> : <AuthNavigation />;
+  return isLoggedIn ? <RootNavigation /> : <AuthNavigation />;
 };

@@ -53,13 +53,13 @@ export default function App() {
       }
     );
     const httpLink = new HttpLink({
-      uri: "http://192.168.219.103:4000/graphql"
+      uri: "http://192.168.219.101:4000/graphql"
     });
     const wsLink = new WebSocketLink({
       options: {
         reconnect: true
       },
-      uri: `ws://192.168.219.103:4000`
+      uri: `ws://192.168.219.101:4000`
     });
     const combinedLinks = split(
       ({ query }) => {

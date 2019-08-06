@@ -339,6 +339,42 @@ export interface addFriendVariables {
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
+// ====================================================
+// GraphQL query operation: seeUser
+// ====================================================
+
+export interface seeUser_seeUser_user {
+  __typename: "User";
+  id: string;
+  isSelf: boolean;
+  username: string;
+  email: string;
+  avatar: string | null;
+  bio: string | null;
+  isFriends: boolean;
+  createdDate: string | null;
+  createdTime: string | null;
+}
+
+export interface seeUser_seeUser {
+  __typename: "SeeUserResponse";
+  ok: boolean;
+  error: string | null;
+  user: seeUser_seeUser_user | null;
+}
+
+export interface seeUser {
+  seeUser: seeUser_seeUser;
+}
+
+export interface seeUserVariables {
+  username: string;
+}
+
+/* tslint:disable */
+/* eslint-disable */
+// This file was automatically generated and should not be edited.
+
 //==============================================================
 // START Enums and Input Objects
 //==============================================================
