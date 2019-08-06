@@ -188,3 +188,24 @@ export const SEE_USER = gql`
     }
   }
 `;
+
+export const EDIT_USER = gql`
+  mutation editUser(
+    $username: String!
+    $avatar: String
+    $firstName: String
+    $lastName: String
+    $bio: String
+  ) {
+    editUser(
+      username: $username
+      avatar: $avatar
+      firstName: $firstName
+      lastName: $lastName
+      bio: $bio
+    ) {
+      ok
+      error
+    }
+  }
+`;
