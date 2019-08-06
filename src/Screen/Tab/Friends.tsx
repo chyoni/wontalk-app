@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   NavigationScreenProp,
   NavigationState,
@@ -66,7 +66,10 @@ interface IProps {
 }
 
 const Friends: React.SFC<IProps> = ({ navigation }) => {
-  const { data, loading } = useQuery<seeMe, null>(SEE_ME);
+  const { data, loading, refetch } = useQuery<seeMe, null>(SEE_ME);
+  useEffect(() => {
+    refetch();
+  }, []);
   if (loading) {
     return <Loader />;
   } else if (!loading && data && data.seeMe) {

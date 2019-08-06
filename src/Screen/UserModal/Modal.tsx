@@ -9,7 +9,8 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import {
   MaterialCommunityIcons,
   EvilIcons,
-  Ionicons
+  Ionicons,
+  SimpleLineIcons
 } from "@expo/vector-icons";
 import { Alert, ImageBackground, ActivityIndicator } from "react-native";
 import Theme from "../../../Theme";
@@ -26,6 +27,7 @@ import {
   addFriendVariables
 } from "../../types/api";
 import Loader from "../../Components/Loader";
+import { useLogOut } from "../../../AuthContext";
 const ModalView = styled.View`
   flex: 1;
   background-color: rgba(0, 0, 0, 0.4);
@@ -62,12 +64,18 @@ const ModalUserBio = styled.Text`
 `;
 const ModalFooter = styled.View`
   width: ${constants.width};
+  display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
-  display: flex;
   height: 100px;
   border-top-color: ${Theme.borderColor};
   border-top-width: 1px;
+`;
+const ButtonContainer = styled.View`
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 const Label = styled.Text`
   font-size: 15px;
@@ -79,6 +87,7 @@ interface IProps {
 const Modal: React.SFC<IProps> = ({ navigation }) => {
   const username = navigation.getParam("username");
   const [loadingState, setLoadingState] = useState<boolean>(false);
+  const logOut = useLogOut();
   const { data, loading } = useQuery<seeUser, seeUserVariables>(SEE_USER, {
     variables: { username }
   });
@@ -91,6 +100,19 @@ const Modal: React.SFC<IProps> = ({ navigation }) => {
       { query: SEE_ME }
     ]
   });
+  const onClickLogOut = async () => {
+    try {
+      setLoadingState(true);
+      setTimeout(() => {
+        logOut();
+      }, 1500);
+    } catch (e) {
+      Alert.alert(e.message);
+      console.log(e);
+    } finally {
+      setLoadingState(false);
+    }
+  };
   if (loading) {
     return <Loader />;
   } else if (!loading && data && data.seeUser.user) {
@@ -133,103 +155,129 @@ const Modal: React.SFC<IProps> = ({ navigation }) => {
           <ModalFooter>
             {user.isSelf ? (
               <>
-                <TouchableOpacity
-                  onPress={() => navigation.navigate("Setting")}
-                >
-                  <MaterialCommunityIcons
-                    name={"pencil"}
-                    size={40}
-                    color={Theme.whiteColor}
-                  />
-                </TouchableOpacity>
-                <Label>프로필 수정</Label>
+                <ButtonContainer style={{ marginRight: 40 }}>
+                  <TouchableOpacity
+                    onPress={() => navigation.navigate("Setting")}
+                  >
+                    <MaterialCommunityIcons
+                      name={"pencil"}
+                      size={40}
+                      color={Theme.whiteColor}
+                    />
+                  </TouchableOpacity>
+                  <Label>프로필 수정</Label>
+                </ButtonContainer>
+                <ButtonContainer>
+                  <TouchableOpacity onPress={onClickLogOut}>
+                    {loadingState ? (
+                      <ActivityIndicator
+                        size={"small"}
+                        color={Theme.whiteColor}
+                      />
+                    ) : (
+                      <SimpleLineIcons
+                        name={"logout"}
+                        size={40}
+                        color={Theme.whiteColor}
+                      />
+                    )}
+                  </TouchableOpacity>
+                  <Label>로그아웃</Label>
+                </ButtonContainer>
               </>
             ) : user.isFriends ? (
               <>
-                <TouchableOpacity
-                  onPress={async () => {
-                    const [
-                      createRoomFn,
-                      { loading: mutationLoading }
-                    ] = createRoom;
-                    try {
-                      setLoadingState(true);
-                      const { data } = await createRoomFn({
-                        variables: {
-                          you: [user.id]
-                        }
-                      });
-                      if (!mutationLoading && data && data.createRoom) {
-                        if (data.createRoom.ok) {
-                          navigation.navigate("ChatRoom", {
-                            roomId: data.createRoom.room!.id,
-                            to: user.username
-                          });
+                <ButtonContainer>
+                  <TouchableOpacity
+                    onPress={async () => {
+                      const [
+                        createRoomFn,
+                        { loading: mutationLoading }
+                      ] = createRoom;
+                      try {
+                        setLoadingState(true);
+                        const { data } = await createRoomFn({
+                          variables: {
+                            you: [user.id]
+                          }
+                        });
+                        if (!mutationLoading && data && data.createRoom) {
+                          if (data.createRoom.ok) {
+                            navigation.navigate("ChatRoom", {
+                              roomId: data.createRoom.room!.id,
+                              to: user.username
+                            });
+                          } else {
+                            Alert.alert(data.createRoom.error!);
+                          }
                         } else {
-                          Alert.alert(data.createRoom.error!);
+                          Alert.alert("알수없는 오류입니다 😰");
                         }
-                      } else {
-                        Alert.alert("알수없는 오류입니다 😰");
+                      } catch (e) {
+                        Alert.alert(e.message);
+                      } finally {
+                        setLoadingState(false);
                       }
-                    } catch (e) {
-                      Alert.alert(e.message);
-                    } finally {
-                      setLoadingState(false);
-                    }
-                  }}
-                >
-                  {loadingState ? (
-                    <ActivityIndicator size={"small"} color={"white"} />
-                  ) : (
-                    <Ionicons
-                      name={"ios-chatbubbles"}
-                      size={40}
-                      color={Theme.whiteColor}
-                    />
-                  )}
-                </TouchableOpacity>
-                <Label>1:1 채팅하기</Label>
+                    }}
+                  >
+                    {loadingState ? (
+                      <ActivityIndicator size={"small"} color={"white"} />
+                    ) : (
+                      <Ionicons
+                        name={"ios-chatbubbles"}
+                        size={40}
+                        color={Theme.whiteColor}
+                      />
+                    )}
+                  </TouchableOpacity>
+                  <Label>1:1 채팅하기</Label>
+                </ButtonContainer>
               </>
             ) : (
               <>
-                <TouchableOpacity
-                  onPress={async () => {
-                    const [addFriendFn, { loading: addFriendLoad }] = addFriend;
-                    try {
-                      setLoadingState(true);
-                      const { data } = await addFriendFn({
-                        variables: {
-                          friendId: user.id
-                        }
-                      });
-                      if (!addFriendLoad && data && data.addFriend) {
-                        if (data.addFriend.ok) {
-                          return;
+                <ButtonContainer>
+                  <TouchableOpacity
+                    onPress={async () => {
+                      const [
+                        addFriendFn,
+                        { loading: addFriendLoad }
+                      ] = addFriend;
+                      try {
+                        setLoadingState(true);
+                        const { data } = await addFriendFn({
+                          variables: {
+                            friendId: user.id
+                          }
+                        });
+                        if (!addFriendLoad && data && data.addFriend) {
+                          if (data.addFriend.ok) {
+                            return;
+                          } else {
+                            Alert.alert(data.addFriend.error!);
+                          }
                         } else {
-                          Alert.alert(data.addFriend.error!);
+                          Alert.alert("알수없는 오류에요 😥");
                         }
-                      } else {
-                        Alert.alert("알수없는 오류에요 😥");
+                      } catch (e) {
+                        console.log(e);
+                        Alert.alert(e.message);
+                      } finally {
+                        setLoadingState(false);
                       }
-                    } catch (e) {
-                      console.log(e);
-                      Alert.alert(e.message);
-                    } finally {
-                      setLoadingState(false);
-                    }
-                  }}
-                >
-                  {loadingState ? (
-                    <ActivityIndicator size={"small"} color={"white"} />
-                  ) : (
-                    <Ionicons
-                      name={"md-person-add"}
-                      size={40}
-                      color={Theme.whiteColor}
-                    />
-                  )}
-                </TouchableOpacity>
-                <Label>친구 추가하기</Label>
+                    }}
+                  >
+                    {loadingState ? (
+                      <ActivityIndicator size={"small"} color={"white"} />
+                    ) : (
+                      <Ionicons
+                        name={"md-person-add"}
+                        size={40}
+                        color={Theme.whiteColor}
+                      />
+                    )}
+                  </TouchableOpacity>
+                  <Label>친구 추가하기</Label>
+                </ButtonContainer>
               </>
             )}
           </ModalFooter>

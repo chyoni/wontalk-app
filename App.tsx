@@ -14,7 +14,8 @@ import {
   AntDesign,
   Feather,
   MaterialCommunityIcons,
-  EvilIcons
+  EvilIcons,
+  SimpleLineIcons
 } from "@expo/vector-icons";
 import { AsyncStorage } from "react-native";
 import { getMainDefinition } from "apollo-utilities";
@@ -32,7 +33,8 @@ export default function App() {
       ...AntDesign.font,
       ...Feather.font,
       ...MaterialCommunityIcons.font,
-      ...EvilIcons.font
+      ...EvilIcons.font,
+      ...SimpleLineIcons.font
     });
     await Asset.loadAsync([require("./assets/noPhoto.jpg")]);
     const cache = new InMemoryCache();
