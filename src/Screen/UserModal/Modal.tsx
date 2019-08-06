@@ -112,7 +112,14 @@ const Modal: React.SFC<IProps> = ({ navigation }) => {
           </ModalHeader>
           <ModalBody>
             <ModalUserColumn>
-              <Avatar uri={user.avatar} width={"90px"} radius={"33px"} />
+              <TouchableOpacity
+                disabled={user.avatar === "" || user.avatar === null}
+                onPress={() =>
+                  navigation.navigate("FullAvatar", { username: user.username })
+                }
+              >
+                <Avatar uri={user.avatar} width={"90px"} radius={"33px"} />
+              </TouchableOpacity>
             </ModalUserColumn>
             <ModalUserColumn>
               <ModalUserName>{user.username}</ModalUserName>
@@ -126,7 +133,9 @@ const Modal: React.SFC<IProps> = ({ navigation }) => {
           <ModalFooter>
             {user.isSelf ? (
               <>
-                <TouchableOpacity onPress={() => Alert.alert("soon")}>
+                <TouchableOpacity
+                  onPress={() => navigation.navigate("Setting")}
+                >
                   <MaterialCommunityIcons
                     name={"pencil"}
                     size={40}

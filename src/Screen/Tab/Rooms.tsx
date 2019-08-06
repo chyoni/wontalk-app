@@ -18,7 +18,7 @@ import constants from "../../../constants";
 const Container = styled.View`
   display: flex;
   padding: 0 15px;
-  margin-bottom: 10px;
+  margin-bottom: 25px;
   flex-direction: row;
 `;
 const Vertical = styled.View`
@@ -78,10 +78,20 @@ const Rooms: React.SFC<IProps> = ({ navigation }) => {
                 <Avatar width={"60px"} radius={"23px"} uri={you.avatar} />
                 <Vertical>
                   <Username>{you.username}</Username>
-                  <PrevMessage>{room.messages[lastIndex - 1].text}</PrevMessage>
+                  {lastIndex > 0 ? (
+                    <PrevMessage>
+                      {room.messages[lastIndex - 1].text}
+                    </PrevMessage>
+                  ) : null}
                 </Vertical>
                 <CreateView>
-                  <Created>{room.messages[lastIndex - 1].createdDate}</Created>
+                  {lastIndex > 0 ? (
+                    <Created>
+                      {room.messages[lastIndex - 1].createdDate}
+                    </Created>
+                  ) : (
+                    <Created>{room.createdDate}</Created>
+                  )}
                 </CreateView>
               </Container>
             </TouchableOpacity>

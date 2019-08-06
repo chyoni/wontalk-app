@@ -1,6 +1,7 @@
 import { createStackNavigator, createAppContainer } from "react-navigation";
 import MainNavigation from "./MainNavigation";
 import Modal from "../Screen/UserModal/Modal";
+import FullAvatar from "../Screen/UserModal/FullAvatar";
 
 const RootNavigation = createStackNavigator(
   {
@@ -9,6 +10,9 @@ const RootNavigation = createStackNavigator(
     },
     Modal: {
       screen: Modal
+    },
+    FullAvatar: {
+      screen: FullAvatar
     }
   },
   {

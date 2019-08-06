@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import {
   NavigationScreenProp,
   NavigationState,
@@ -8,6 +8,7 @@ import ChatRoomPresenter from "./ChatRoomPresenter";
 import { AntDesign } from "@expo/vector-icons";
 import Theme from "../../../Theme";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { View, ActivityIndicator } from "react-native";
 
 interface IProps {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>;
@@ -26,7 +27,25 @@ class ChatRoomContainer extends React.Component<IProps, any> {
   }
   render() {
     const { navigation } = this.props;
-    return <ChatRoomPresenter navigation={navigation} />;
+    const roomId = navigation.getParam("roomId");
+    const to = navigation.getParam("to");
+    return (
+      <Suspense
+        fallback={
+          <View
+            style={{
+              flex: 1,
+              alignItems: "center",
+              justifyContent: "center"
+            }}
+          >
+            <ActivityIndicator size={"small"} color={"black"} />
+          </View>
+        }
+      >
+        <ChatRoomPresenter navigation={navigation} roomId={roomId} to={to} />
+      </Suspense>
+    );
   }
 }
 

@@ -17,7 +17,7 @@ import {
   Alert
 } from "react-native";
 import { useQuery, useMutation, useSubscription } from "react-apollo-hooks";
-import { SEE_ROOM, SEND_MESSAGE, NEW_MESSAGE } from "../../Queries";
+import { SEE_ROOM, SEND_MESSAGE, NEW_MESSAGE, SEE_ME } from "../../Queries";
 import {
   seeRoom,
   seeRoomVariables,
@@ -69,22 +69,24 @@ const Created = styled.Text`
 
 interface IProps {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>;
+  roomId: string;
+  to: string;
 }
-const ChatRoom: React.SFC<IProps> = ({ navigation }) => {
-  const roomId = navigation.getParam("roomId");
-  const to = navigation.getParam("to");
+const ChatRoom: React.SFC<IProps> = ({ navigation, roomId, to }) => {
   const message = useInput("");
   const [loading, setLoading] = useState<boolean>(false);
   const { data, loading: seeRoomLoading } = useQuery<seeRoom, seeRoomVariables>(
     SEE_ROOM,
     {
+      suspend: true,
       variables: { roomId }
     }
   );
   const sendMessage = useMutation<sendMessage, sendMessageVariables>(
     SEND_MESSAGE,
     {
-      variables: { roomId, text: message.value }
+      variables: { roomId, text: message.value },
+      refetchQueries: () => [{ query: SEE_ME }]
     }
   );
   const { data: subData } = useSubscription<newMessage, newMessageVariables>(
